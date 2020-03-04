@@ -1,0 +1,13 @@
+{
+"storage_account_name": "",
+"storage_account_key": "",
+"storage_container_name": "",
+"text_analytics_key": "",
+"text_analytics_endpoint": "",
+"database_username": "",
+"database_password": "",
+"database_name": "",
+"database_host": "",
+"API_username": "",
+"API_password": ""
+}

@@ -1,4 +1,5 @@
 import unittest
+import json
 import PatientServiceAnalysisTool as PSAT
 from PatientServiceAnalysisTool import app
 
@@ -19,8 +20,10 @@ class PSATTest(unittest.TestCase):
         """
         Checks to see if given the correct credentials login succeeds
         """
-        password = PSAT.get_password("your_chosen_username")
-        self.assertEqual(password, "your_chosen_password")
+        with open("config.json") as config_file:
+            data = json.load(config_file)
+        password = PSAT.get_password(data["API_username"])
+        self.assertEqual(password, data["API_password"])
 
     def test_unsuccessful_authentication(self):
         """

@@ -1,5 +1,6 @@
 from azure.cognitiveservices.language.textanalytics import TextAnalyticsClient
 from msrest.authentication import CognitiveServicesCredentials
+import json
 
 
 class TextAnalyticsService():
@@ -8,8 +9,10 @@ class TextAnalyticsService():
     """
 
     def __init__(self):
-        self.subscription_key = "your_subscription_key"
-        self.endpoint = "your_endpoint"
+        with open('config.json') as config_file:
+            data = json.load(config_file)
+            self.subscription_key = data["text_analytics_key"]
+            self.endpoint = data["text_analytics_endpoint"]
 
     def authenticate_client(self):
         """
@@ -33,7 +36,7 @@ class TextAnalyticsService():
         """
         comment_sentiment_scores = []
         client = self.authenticate_client()
-        
+
         for comment in comments:
             data = [{"id": 0, "language": "en", "text": comment}]
             try:

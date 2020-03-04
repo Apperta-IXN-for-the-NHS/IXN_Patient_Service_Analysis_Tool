@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, abort, make_response
 from flask_restful import Api, Resource, reqparse
 from flask_httpauth import HTTPBasicAuth
+import json
 from ProcessData import DataForMultipleMonths
 from Database import Database
 
@@ -20,8 +21,11 @@ def get_password(username):
     given by the request. Note this isn't returning the password to where the request was made from, the comparison of
     passwords in done internally by the HTTPBasicAuth library. If username not matched then None returned.
     """
-    if username == 'your_chosen_username':
-        return 'your_chosen_password'
+    with open("config.json") as config_file:
+        data = json.load(config_file)
+
+    if username == data["API_username"]:
+        return data["API_password"]
     return None
 
 

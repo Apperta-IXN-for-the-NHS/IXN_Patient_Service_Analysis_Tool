@@ -1,6 +1,7 @@
 from azure.storage.blob import BlockBlobService
 import pandas as pd
 import os
+import json
 
 
 class AzureStorage():
@@ -10,11 +11,13 @@ class AzureStorage():
     """
 
     def __init__(self):
-        self.storage_account_name = "your_storage_account_name"
-        self.storage_account_key = "your_storage_account_key"
+        with open('config.json') as config_file:
+            data = json.load(config_file)
+            self.storage_account_name = data["storage_account_name"]
+            self.storage_account_key = data["storage_account_key"]
+            self.container_name = data["storage_container_name"]
         self.positive_local_file = "temp1.xlsx"
         self.negative_local_file = "temp2.xlsx"
-        self.container_name = "your_container_name"
         self.blob_data_names = []
 
     def get_blob_data_names(self):

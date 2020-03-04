@@ -1,16 +1,20 @@
 import mysql.connector
 import pandas as pd
+import json
 
 
 def connect_to_database():
     """
     Attempts to connect to the database hosted on azure.
     """
+    with open("config.json") as config_file:
+        data = json.load(config_file)
+
     try:
-        db_connection = mysql.connector.connect(user='your_database_username',
-                                                password='your_database_password',
-                                                database='your_database_name',
-                                                host='your_database_host_url'
+        db_connection = mysql.connector.connect(user=data["database_username"],
+                                                password=data["database_password"],
+                                                database=data["database_name"],
+                                                host=data["database_host"]
                                                 )
         return db_connection
     except mysql.connector.Error as err:
@@ -18,7 +22,6 @@ def connect_to_database():
 
 
 class Database():
-
     """
     This class encapsulates all the code that deals with modifying the database analysed patient data is stored on.
     Azure.
@@ -48,13 +51,13 @@ class Database():
 
     def create_table(self):
         """
-        Creates the table in the database if it does not already exist. Table should already exist unless it's being
-        run for the first time, but this method is here just as a precautionary measure.
+        Creates the table in the database if it does not already exist. Table should already exist but this method is here
+        just as a precautionary measure.
         """
         db_connection = connect_to_database()
         cursor = db_connection.cursor()
 
-        cursor.execute("USE your_database_name")
+        cursor.execute("USE fftfeedback")
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS feedbackdatabase(ID INT NOT NULL AUTO_INCREMENT, Clinic VARCHAR(100) NOT NULL, Comments VARCHAR(1000) NOT NULL, Month INT NOT NULL, PosOrNeg VARCHAR(10) NOT NULL, Response VARCHAR(25), Sentiment_Score FLOAT NOT NULL, Year INT NOT NULL, PRIMARY KEY (ID));")
         db_connection.commit()
