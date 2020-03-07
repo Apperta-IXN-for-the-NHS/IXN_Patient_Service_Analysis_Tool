@@ -1,7 +1,7 @@
 import unittest
 import json
-import PatientServiceAnalysisTool as PSAT
-from PatientServiceAnalysisTool import app
+import application as PSAT
+from application import app
 
 
 class PSATTest(unittest.TestCase):
