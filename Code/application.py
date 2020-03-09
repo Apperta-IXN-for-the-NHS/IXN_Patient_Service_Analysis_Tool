@@ -144,6 +144,3 @@ class DataForMonthAPI(Resource):
 api.add_resource(DataForYearAPI, '/psat/pastyear/', endpoint='year')
 api.add_resource(DataForMonthAPI, '/psat/specificmonth/', endpoint='month')
 api.add_resource(DataForSpecifiedTimeAPI, '/psat/mostrecentmonths/<int:no_of_months>', endpoint='range')
-
-if __name__ == '__main__':
-    app.run(debug=True)
